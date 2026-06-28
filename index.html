@@ -24,11 +24,16 @@
     font-size: 14px;
     line-height: 1.5;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   header {
     border-bottom: 1px solid var(--border);
     padding: 28px 40px 24px;
+    width: 100%;
+    max-width: 1200px;
   }
 
   header h1 {
@@ -48,9 +53,10 @@
 
   nav {
     display: flex;
-    gap: 0;
     padding: 0 40px;
     border-bottom: 1px solid var(--border);
+    width: 100%;
+    max-width: 1200px;
   }
 
   nav button {
@@ -74,12 +80,15 @@
     color: #4a9eff;
   }
 
-  main { padding: 32px 40px; max-width: 1200px; }
+  main {
+    padding: 32px 40px;
+    width: 100%;
+    max-width: 1200px;
+  }
 
   .panel { display: none; }
   .panel.active { display: block; }
 
-  /* ── SECTION LABELS ── */
   .section-label {
     font-size: 10px;
     font-weight: 600;
@@ -93,7 +102,6 @@
 
   .section-label:first-child { margin-top: 0; }
 
-  /* ── TABLE ── */
   table {
     width: 100%;
     border-collapse: collapse;
@@ -129,20 +137,26 @@
   .col-abil  { width: 14%; }
   .col-desc  { width: 36%; color: var(--muted); font-size: 13px; }
 
-  /* ── PET NAME COLORS ── */
-  .c-cyan    { color: #00cfff; }
-  .c-pink    { color: #ff69b4; }
-  .c-orange  { color: #ff8c00; }
-  .c-red     { color: #ff4040; }
-  .c-white   { color: #e8edf5; }
-  .c-green   { color: #00e87a; }
-  .c-teal    { color: #00ced1; }
-  .c-lime    { color: #7fff00; }
-  .c-sky     { color: #4fc3f7; }
-  .c-gold    { color: #ffd700; }
-  .c-purple  { color: #b57bee; }
-  .c-gray    { color: #5a7090; }
+  /* Pet name colors */
+  .c-cyan       { color: #00cfff; }
+  .c-pink       { color: #ff69b4; }
+  .c-orange     { color: #ff8c00; }
+  .c-red        { color: #ff4040; }
+  .c-green      { color: #00e87a; }
+  .c-teal       { color: #00ced1; }
+  .c-lime       { color: #7fff00; }
+  .c-sky        { color: #4fc3f7; }
+  .c-gold       { color: #ffd700; }
+  .c-purple     { color: #b57bee; }
+  .c-gray       { color: #5a7090; }
+  /* Thematic colors for previously-white pets */
+  .c-tesseract  { color: #a090ff; }   /* electric violet — dimensional/geometric */
+  .c-necro      { color: #b0c8b0; }   /* pale bone green — undead */
+  .c-sundae     { color: #ffb8d4; }   /* pastel strawberry — ice cream */
+  .c-kraken     { color: #2080c0; }   /* deep ocean blue — sea monster */
+  .c-opal       { color: #c0e8ff; }   /* iridescent pale blue — gem shimmer */
 
+  /* Source/egg colors */
   .c-candy   { color: #ff9dce; }
   .c-ice     { color: #80e8ff; }
   .c-magma   { color: #ff6a00; }
@@ -161,7 +175,7 @@
   .tier2 { color: #ff4040; font-size: 11px; }
   .tier3 { color: #b57bee; font-size: 11px; }
 
-  /* ── LUCK CALC ── */
+  /* Luck calc */
   .calc-top {
     display: flex;
     align-items: center;
@@ -198,10 +212,7 @@
 
   .calc-top input:focus { border-color: #4a9eff; }
 
-  .calc-top .suffix {
-    font-size: 14px;
-    color: var(--muted);
-  }
+  .calc-top .suffix { font-size: 14px; color: var(--muted); }
 
   .calc-top .hint {
     font-size: 12px;
@@ -209,16 +220,14 @@
     margin-left: auto;
   }
 
-  .luck-table thead th { color: var(--muted); }
-
   .lc-name  { width: 18%; }
-  .lc-cat   { width: 14%; }
+  .lc-cat   { width: 12%; }
   .lc-base  { width: 14%; }
-  .lc-eff   { width: 14%; color: #ffd700; }
+  .lc-eff   { width: 14%; }
   .lc-prob  { width: 12%; }
   .lc-exp   { width: 14%; }
-  .lc-50    { width: 7%; }
-  .lc-90    { width: 7%; }
+  .lc-50    { width: 8%; }
+  .lc-90    { width: 8%; }
 
   .val-gold   { color: #ffd700; }
   .val-lime   { color: #7fff00; }
@@ -227,7 +236,6 @@
   .val-red    { color: #ff6060; }
   .val-muted  { color: var(--muted); }
 
-  /* category badge */
   .badge {
     font-size: 10px;
     letter-spacing: 0.06em;
@@ -258,7 +266,6 @@
 
 <main>
 
-<!-- ════════════════════════════════ SECRETS PANEL ════════════════════════════════ -->
 <div id="secrets" class="panel active">
 
   <div class="section-label">Eggs</div>
@@ -277,16 +284,16 @@
       <tr><td class="c-pink">Sugar Fairy</td><td>1 / 10,000,000</td><td class="c-candy">Candy Egg</td><td class="ability c-pink">Sugar Rush</td><td class="col-desc">20% chance to make blocks sugary for 5s. Balls that hit sugary blocks gain +20% speed for 3s.</td></tr>
       <tr><td class="c-orange">Phoenix</td><td>1 / 10,000,000</td><td class="c-magma">Magma Egg</td><td class="ability c-orange">Rebirth</td><td class="col-desc">Bounces off the ball destruction area once. When it does, gain 25% attack.</td></tr>
       <tr><td class="c-red">Hellking</td><td>1 / 50,000,000</td><td class="c-magma">Magma Egg</td><td class="ability c-red">Inferno</td><td class="col-desc">Only 5% direct damage, but douses every block it hits. When returned, ignites every doused block for 300% damage.</td></tr>
-      <tr><td class="c-white">TESSERACT</td><td>1 / 1,000,000</td><td class="c-shape">Shape Egg</td><td class="ability c-white">Velocity</td><td class="col-desc">Ball multiplies its speed by 1.002x every hit.</td></tr>
+      <tr><td class="c-tesseract">TESSERACT</td><td>1 / 1,000,000</td><td class="c-shape">Shape Egg</td><td class="ability c-tesseract">Velocity</td><td class="col-desc">Ball multiplies its speed by 1.002x every hit.</td></tr>
       <tr><td class="c-green">Venom</td><td>1 / 10,000,000</td><td class="c-mush">Mushroom Egg</td><td class="ability c-green">Venom</td><td class="col-desc">Poisons blocks for +250% damage over 5s, but they can't be poisoned again during that time.</td></tr>
-      <tr><td class="c-white">Necromancer</td><td>1 / 25,000,000</td><td class="c-mush">Mushroom Egg</td><td class="ability c-white">Necromancy</td><td class="col-desc">Every block destroyed by this ball shoots an additional 1,000 HP Skeleton Ball.</td></tr>
+      <tr><td class="c-necro">Necromancer</td><td>1 / 25,000,000</td><td class="c-mush">Mushroom Egg</td><td class="ability c-necro">Necromancy</td><td class="col-desc">Every block destroyed by this ball shoots an additional 1,000 HP Skeleton Ball.</td></tr>
       <tr><td class="c-teal">Medusa</td><td>1 / 12,500,000</td><td class="c-runic">Runic Egg</td><td class="ability c-teal">Petrification</td><td class="col-desc">Turns a block to stone on hit. Any hit on this block from any ball deals +1% damage, stacks.</td></tr>
       <tr><td class="c-lime">Runic Beast</td><td>1 / 77,777,777</td><td class="c-runic">Runic Egg</td><td class="ability c-lime">Runic Rush</td><td class="col-desc">Starts at 250% damage. For every block this ball hits, it decreases damage by 5%. Destroys itself at 0% damage.</td></tr>
       <tr><td class="c-sky">Summer Pegasus</td><td>1 / 5,000,000</td><td class="c-tide">Tide Egg</td><td class="ability c-sky">Vengeance</td><td class="col-desc">For every ball that is destroyed, increase damage by 25%. Excluding Skeletons.</td></tr>
-      <tr><td class="c-white">Ice Cream Sundae</td><td>1 / 15,000,000</td><td class="c-tropic">Tropical Egg</td><td class="ability c-muted">&mdash;</td><td class="col-desc">&mdash;</td></tr>
-      <tr><td class="c-white">Kraken</td><td>1 / 88,888,888</td><td class="c-tropic">Tropical Egg</td><td class="ability c-muted">&mdash;</td><td class="col-desc">&mdash;</td></tr>
+      <tr><td class="c-sundae">Ice Cream Sundae</td><td>1 / 15,000,000</td><td class="c-tropic">Tropical Egg</td><td class="ability c-sundae">Sweet Treat</td><td class="col-desc">Every time a chest is broken, apply Sugar Rush to all balls for 2 seconds. Stacks!</td></tr>
+      <tr><td class="c-kraken">Kraken</td><td>1 / 88,888,888</td><td class="c-tropic">Tropical Egg</td><td class="ability c-kraken">Octo Charge</td><td class="col-desc">Every 8th hit, deal 500% damage.</td></tr>
       <tr><td class="c-gray">???</td><td>1 / 20,000</td><td class="c-gray">C:</td><td class="ability c-muted">&mdash;</td><td class="col-desc">Pet not yet obtained.</td></tr>
-      <tr><td class="c-white">Opalescent Opal</td><td>1 / 2,000,000</td><td class="c-diamond">Diamond Egg</td><td class="ability c-muted">&mdash;</td><td class="col-desc">&mdash;</td></tr>
+      <tr><td class="c-opal">Opalescent Opal</td><td>1 / 2,000,000</td><td class="c-diamond">Diamond Egg</td><td class="ability c-opal">Shining Crystal</td><td class="col-desc">15% chance to gain +100% gems from a chest.</td></tr>
     </tbody>
   </table>
 
@@ -343,17 +350,16 @@
 
 </div>
 
-<!-- ════════════════════════════════ LUCK CALC PANEL ════════════════════════════════ -->
 <div id="luck" class="panel">
 
   <div class="calc-top">
     <label>Luck multiplier</label>
     <input type="number" id="luck-input" value="1" min="0.01" step="0.01" oninput="recalc()">
     <span class="suffix">x</span>
-    <span class="hint">Effective rate = base rate / luck &nbsp;&nbsp;|&nbsp;&nbsp; Rolls for N% = ln(1-N) / ln(1-p)</span>
+    <span class="hint">Effective rate = base rate / luck &nbsp;&nbsp;|&nbsp;&nbsp; Rolls for N% = ln(1&minus;N) / ln(1&minus;p)</span>
   </div>
 
-  <table class="luck-table">
+  <table>
     <thead>
       <tr>
         <th class="lc-name">Name</th>
@@ -375,38 +381,43 @@
 
 <script>
   const PETS = [
-    { name: "Cryogen",          cls: "c-cyan",   cat: "Egg",    base: 10000000  },
-    { name: "Sugar Fairy",      cls: "c-pink",   cat: "Egg",    base: 10000000  },
-    { name: "Phoenix",          cls: "c-orange", cat: "Egg",    base: 10000000  },
-    { name: "Hellking",         cls: "c-red",    cat: "Egg",    base: 50000000  },
-    { name: "TESSERACT",        cls: "c-white",  cat: "Egg",    base: 1000000   },
-    { name: "Venom",            cls: "c-green",  cat: "Egg",    base: 10000000  },
-    { name: "Necromancer",      cls: "c-white",  cat: "Egg",    base: 25000000  },
-    { name: "Medusa",           cls: "c-teal",   cat: "Egg",    base: 12500000  },
-    { name: "Runic Beast",      cls: "c-lime",   cat: "Egg",    base: 77777777  },
-    { name: "Summer Pegasus",   cls: "c-sky",    cat: "Egg",    base: 5000000   },
-    { name: "Ice Cream Sundae", cls: "c-white",  cat: "Egg",    base: 15000000  },
-    { name: "Kraken",           cls: "c-white",  cat: "Egg",    base: 88888888  },
-    { name: "???",              cls: "c-gray",   cat: "Egg",    base: 20000     },
-    { name: "Opalescent Opal",  cls: "c-white",  cat: "Egg",    base: 2000000   },
-    { name: "Crystal Protector",cls: "c-orange", cat: "Bounty", base: 5000000   },
-    { name: "Poltergeist",      cls: "c-red",    cat: "Bounty", base: 12500000  },
-    { name: "Wrath",            cls: "c-red",    cat: "Bounty", base: 66666666  },
+    { name: "Cryogen",          cls: "c-cyan",      cat: "Egg",    base: 10000000 },
+    { name: "Sugar Fairy",      cls: "c-pink",      cat: "Egg",    base: 10000000 },
+    { name: "Phoenix",          cls: "c-orange",    cat: "Egg",    base: 10000000 },
+    { name: "Hellking",         cls: "c-red",       cat: "Egg",    base: 50000000 },
+    { name: "TESSERACT",        cls: "c-tesseract", cat: "Egg",    base: 1000000  },
+    { name: "Venom",            cls: "c-green",     cat: "Egg",    base: 10000000 },
+    { name: "Necromancer",      cls: "c-necro",     cat: "Egg",    base: 25000000 },
+    { name: "Medusa",           cls: "c-teal",      cat: "Egg",    base: 12500000 },
+    { name: "Runic Beast",      cls: "c-lime",      cat: "Egg",    base: 77777777 },
+    { name: "Summer Pegasus",   cls: "c-sky",       cat: "Egg",    base: 5000000  },
+    { name: "Ice Cream Sundae", cls: "c-sundae",    cat: "Egg",    base: 15000000 },
+    { name: "Kraken",           cls: "c-kraken",    cat: "Egg",    base: 88888888 },
+    { name: "???",              cls: "c-gray",      cat: "Egg",    base: 20000    },
+    { name: "Opalescent Opal",  cls: "c-opal",      cat: "Egg",    base: 2000000  },
+    { name: "Crystal Protector",cls: "c-orange",    cat: "Bounty", base: 5000000  },
+    { name: "Poltergeist",      cls: "c-red",       cat: "Bounty", base: 12500000 },
+    { name: "Wrath",            cls: "c-red",       cat: "Bounty", base: 66666666 },
   ];
 
   function fmtNum(n) {
     if (Number.isInteger(n)) return n.toLocaleString('en-US');
-    const parts = n.toFixed(4).replace(/\.?0+$/, '').split('.');
-    parts[0] = parseInt(parts[0]).toLocaleString('en-US');
+    // Round to 2 decimal places, strip trailing zeros
+    const rounded = Math.round(n * 100) / 100;
+    const parts = rounded.toFixed(2).replace(/\.?0+$/, '').split('.');
+    parts[0] = Number(parts[0]).toLocaleString('en-US');
     return parts.join('.');
   }
 
   function fmtProb(n) {
     if (n === 0) return '0%';
+    // Find enough decimal places to show at least 2 significant digits, then round there
     let decimals = 2;
     let test = n;
-    while (test < 0.01 && decimals < 20) { decimals += 2; test *= 100; }
-    return n.toFixed(decimals).replace(/\.?0+$/, '') + '%';
+    while (test < 1 && decimals < 20) { decimals += 1; test *= 10; }
+    decimals = Math.max(decimals, 2);
+    const rounded = parseFloat(n.toFixed(decimals));
+    return rounded.toFixed(decimals).replace(/\.?0+$/, '') + '%';
   }
 
   function rolls(base, luck, pct) {
