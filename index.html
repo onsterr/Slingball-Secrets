@@ -155,6 +155,10 @@
   .c-sundae     { color: #ffb8d4; } 
   .c-kraken     { color: #2080c0; }  
   .c-opal       { color: #c0e8ff; }  
+  .c-ruby       { color: #ff2d55; }
+  .c-summerphoenix { color: #ffe34d; }
+  .c-moonseeker { color: #8fa8ff; }
+  .c-sunseeker  { color: #ffb347; }
 
  
   .c-candy   { color: #ff9dce; }
@@ -168,12 +172,30 @@
   .c-diamond { color: #80d0ff; }
   .c-radiant { color: #ffc840; }
   .c-dark    { color: #80ff80; }
+  .c-solar   { color: #ffcf40; }
 
   .ability { font-style: italic; }
 
   .tier1 { color: #ff8c00; font-size: 11px; }
   .tier2 { color: #ff4040; font-size: 11px; }
   .tier3 { color: #b57bee; font-size: 11px; }
+
+  .unavail { font-size: 11px; color: #5a7090; }
+
+  .c-rainbow {
+    background: linear-gradient(90deg, #ff4040, #ff8c00, #ffd700, #00e87a, #00cfff, #b57bee, #ff4040);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 600;
+    animation: rainbow-shift 3s linear infinite;
+  }
+
+  @keyframes rainbow-shift {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
 
 
   .calc-top {
@@ -220,14 +242,39 @@
     margin-left: auto;
   }
 
-  .lc-name  { width: 18%; }
-  .lc-cat   { width: 12%; }
-  .lc-base  { width: 14%; }
-  .lc-eff   { width: 14%; }
-  .lc-prob  { width: 12%; }
+  .egg-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .egg-tabs button {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 11px;
+    font-family: inherit;
+    letter-spacing: 0.04em;
+    padding: 7px 14px;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+
+  .egg-tabs button:hover { color: var(--text); border-color: var(--dim); }
+
+  .egg-tabs button.active {
+    background: #0a2540;
+    border-color: #4a9eff;
+    color: #4a9eff;
+  }
+
+  .lc-name  { width: 28%; }
+  .lc-base  { width: 22%; }
+  .lc-eff   { width: 20%; }
+  .lc-prob  { width: 16%; }
   .lc-exp   { width: 14%; }
-  .lc-50    { width: 8%; }
-  .lc-90    { width: 8%; }
 
   .val-gold   { color: #ffd700; }
   .val-lime   { color: #7fff00; }
@@ -247,8 +294,47 @@
   .badge-bounty { background: #2a1200; color: #ff8c00; }
 
   @media (max-width: 768px) {
-    header, nav, main { padding-left: 16px; padding-right: 16px; }
-    .col-desc, .lc-50, .lc-90, .lc-exp { display: none; }
+    header { padding: 20px 16px 18px; }
+    header h1 { font-size: 17px; }
+    nav { padding: 0 16px; }
+    nav button { padding: 12px 14px 10px; font-size: 11px; }
+    main { padding: 20px 16px; }
+    .section-label { font-size: 9px; margin: 28px 0 10px; }
+    table { table-layout: auto; }
+    thead th, tbody td { padding: 8px 10px; }
+    .col-desc { display: none; }
+    .col-name  { width: 28%; }
+    .col-rate  { width: 26%; }
+    .col-src   { width: 24%; }
+    .col-abil  { width: 22%; }
+    .calc-top { flex-wrap: wrap; gap: 12px; padding: 16px; }
+    .calc-top .hint { margin-left: 0; width: 100%; order: 3; }
+    .egg-tabs { gap: 5px; }
+    .egg-tabs button { padding: 6px 10px; font-size: 10px; }
+    .lc-exp { display: none; }
+    .lc-name  { width: 34%; }
+    .lc-base  { width: 26%; }
+    .lc-eff   { width: 22%; }
+    .lc-prob  { width: 18%; }
+  }
+
+  @media (max-width: 480px) {
+    header h1 { font-size: 15px; letter-spacing: 0.05em; }
+    header p { font-size: 11px; }
+    nav button { padding: 10px 10px 8px; font-size: 10px; }
+    main { padding: 16px 12px; }
+    thead th { font-size: 9px; padding: 6px 8px; }
+    tbody td { padding: 7px 8px; font-size: 12px; }
+    .col-abil { display: none; }
+    .col-name  { width: 32%; }
+    .col-rate  { width: 32%; }
+    .col-src   { width: 36%; }
+    .calc-top input { font-size: 18px; width: 100px; padding: 6px 10px; }
+    .calc-top label { font-size: 10px; }
+    .lc-name  { width: 40%; }
+    .lc-base  { width: 30%; }
+    .lc-eff   { width: 30%; }
+    .lc-prob  { display: none; }
   }
 </style>
 </head>
@@ -268,7 +354,7 @@
 
 <div id="secrets" class="panel active">
 
-  <div class="section-label">Eggs</div>
+  <div class="section-label">???</div>
   <table>
     <thead>
       <tr>
@@ -280,20 +366,38 @@
       </tr>
     </thead>
     <tbody>
+      <tr><td class="c-gray">???</td><td>1 / 20,000</td><td class="c-gray">C:</td><td class="ability c-muted">&mdash;</td><td class="col-desc">Pet not yet obtained.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-label">Secrets</div>
+  <table>
+    <thead>
+      <tr>
+        <th class="col-name">Name</th>
+        <th class="col-rate">Base Rate</th>
+        <th class="col-src">Source</th>
+        <th class="col-abil">Ability</th>
+        <th class="col-desc">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="c-rainbow">???</td><td>1 / 111,111,111</td><td class="c-solar">Solar Egg</td><td class="ability c-muted">&mdash;</td><td class="col-desc">Pet not yet obtained.</td></tr>
       <tr><td class="c-cyan">Cryogen</td><td>1 / 10,000,000</td><td class="c-ice">Ice Egg</td><td class="ability c-cyan">Cryogenic</td><td class="col-desc">Freezes block on hit. Normal blocks take 20% extra damage, chests take 10%.</td></tr>
       <tr><td class="c-pink">Sugar Fairy</td><td>1 / 10,000,000</td><td class="c-candy">Candy Egg</td><td class="ability c-pink">Sugar Rush</td><td class="col-desc">20% chance to make blocks sugary for 5s. Balls that hit sugary blocks gain +20% speed for 3s.</td></tr>
       <tr><td class="c-orange">Phoenix</td><td>1 / 10,000,000</td><td class="c-magma">Magma Egg</td><td class="ability c-orange">Rebirth</td><td class="col-desc">Bounces off the ball destruction area once. When it does, gain 25% attack.</td></tr>
       <tr><td class="c-red">Hellking</td><td>1 / 50,000,000</td><td class="c-magma">Magma Egg</td><td class="ability c-red">Inferno</td><td class="col-desc">Only 5% direct damage, but douses every block it hits. When returned, ignites every doused block for 300% damage.</td></tr>
-      <tr><td class="c-tesseract">TESSERACT</td><td>1 / 1,000,000</td><td class="c-shape">Shape Egg</td><td class="ability c-tesseract">Velocity</td><td class="col-desc">Ball multiplies its speed by 1.002x every hit.</td></tr>
       <tr><td class="c-green">Venom</td><td>1 / 10,000,000</td><td class="c-mush">Mushroom Egg</td><td class="ability c-green">Venom</td><td class="col-desc">Poisons blocks for +250% damage over 5s, but they can't be poisoned again during that time.</td></tr>
       <tr><td class="c-necro">Necromancer</td><td>1 / 25,000,000</td><td class="c-mush">Mushroom Egg</td><td class="ability c-necro">Necromancy</td><td class="col-desc">Every block destroyed by this ball shoots an additional 1,000 HP Skeleton Ball.</td></tr>
       <tr><td class="c-teal">Medusa</td><td>1 / 12,500,000</td><td class="c-runic">Runic Egg</td><td class="ability c-teal">Petrification</td><td class="col-desc">Turns a block to stone on hit. Any hit on this block from any ball deals +1% damage, stacks.</td></tr>
       <tr><td class="c-lime">Runic Beast</td><td>1 / 77,777,777</td><td class="c-runic">Runic Egg</td><td class="ability c-lime">Runic Rush</td><td class="col-desc">Starts at 250% damage. For every block this ball hits, it decreases damage by 5%. Destroys itself at 0% damage.</td></tr>
-      <tr><td class="c-sky">Summer Pegasus</td><td>1 / 5,000,000</td><td class="c-tide">Tide Egg</td><td class="ability c-sky">Vengeance</td><td class="col-desc">For every ball that is destroyed, increase damage by 25%. Excluding Skeletons.</td></tr>
+      <tr><td class="c-summerphoenix">Summer Phoenix</td><td>1 / 10,000,000</td><td class="c-tide">Tide Egg</td><td class="ability c-summerphoenix">Rebirth</td><td class="col-desc">Bounces off the ball destruction area once. When it does, gain 25% attack.</td></tr>
       <tr><td class="c-sundae">Ice Cream Sundae</td><td>1 / 15,000,000</td><td class="c-tropic">Tropical Egg</td><td class="ability c-sundae">Sweet Treat</td><td class="col-desc">Every time a chest is broken, apply Sugar Rush to all balls for 2 seconds. Stacks!</td></tr>
       <tr><td class="c-kraken">Kraken</td><td>1 / 88,888,888</td><td class="c-tropic">Tropical Egg</td><td class="ability c-kraken">Octo Charge</td><td class="col-desc">Every 8th hit, deal 500% damage.</td></tr>
-      <tr><td class="c-gray">???</td><td>1 / 20,000</td><td class="c-gray">C:</td><td class="ability c-muted">&mdash;</td><td class="col-desc">Pet not yet obtained.</td></tr>
       <tr><td class="c-opal">Ornate Opal</td><td>1 / 2,000,000</td><td class="c-diamond">Diamond Egg</td><td class="ability c-opal">Shining Crystal</td><td class="col-desc">15% chance to gain +100% gems from a chest.</td></tr>
+      <tr><td class="c-ruby">Royal Ruby</td><td>1 / 2,000,000</td><td class="c-diamond">Diamond Egg</td><td class="ability c-ruby">Gem Harvester</td><td class="col-desc">Every block this ball breaks gives 1 gem in the game's best area.</td></tr>
+      <tr><td class="c-moonseeker">Moonseeker</td><td>1 / 5,000,000</td><td class="c-solar">Solar Egg</td><td class="ability c-moonseeker">Lunar Shift</td><td class="col-desc">This ball gains x1.25 speed.</td></tr>
+      <tr><td class="c-sunseeker">Sunseeker</td><td>1 / 5,000,000</td><td class="c-solar">Solar Egg</td><td class="ability c-sunseeker">Solar Shift</td><td class="col-desc">+10% Crit Chance for every ball.</td></tr>
     </tbody>
   </table>
 
@@ -348,6 +452,23 @@
     </tbody>
   </table>
 
+  <div class="section-label">Unavailable</div>
+  <table>
+    <thead>
+      <tr>
+        <th class="col-name">Name</th>
+        <th class="col-rate">Base Rate</th>
+        <th class="col-src">Source</th>
+        <th class="col-abil">Ability</th>
+        <th class="col-desc">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="c-sky">Summer Pegasus</td><td><span class="unavail">Unavailable</span></td><td class="c-tide">Tide Egg</td><td class="ability c-sky">Vengeance</td><td class="col-desc">For every ball that is destroyed, increase damage by 25%. Excluding Skeletons.</td></tr>
+      <tr><td class="c-tesseract">TESSERACT</td><td><span class="unavail">Unavailable</span></td><td class="c-shape">Shape Egg</td><td class="ability c-tesseract">Velocity</td><td class="col-desc">Ball multiplies its speed by 1.002x every hit.</td></tr>
+    </tbody>
+  </table>
+
 </div>
 
 <div id="luck" class="panel">
@@ -359,17 +480,16 @@
     <span class="hint">Effective rate = base rate / luck &nbsp;&nbsp;|&nbsp;&nbsp; Rolls for N% = ln(1&minus;N) / ln(1&minus;p)</span>
   </div>
 
+  <div class="egg-tabs" id="egg-tabs"></div>
+
   <table>
     <thead>
       <tr>
         <th class="lc-name">Name</th>
-        <th class="lc-cat">Category</th>
         <th class="lc-base">Base Rate</th>
         <th class="lc-eff">With Luck</th>
         <th class="lc-prob">Chance / Roll</th>
         <th class="lc-exp">Expected Rolls</th>
-        <th class="lc-50">50%</th>
-        <th class="lc-90">90%</th>
       </tr>
     </thead>
     <tbody id="luck-tbody"></tbody>
@@ -381,28 +501,29 @@
 
 <script>
   const PETS = [
-    { name: "Cryogen",          cls: "c-cyan",      cat: "Egg",    base: 10000000 },
-    { name: "Sugar Fairy",      cls: "c-pink",      cat: "Egg",    base: 10000000 },
-    { name: "Phoenix",          cls: "c-orange",    cat: "Egg",    base: 10000000 },
-    { name: "Hellking",         cls: "c-red",       cat: "Egg",    base: 50000000 },
-    { name: "TESSERACT",        cls: "c-tesseract", cat: "Egg",    base: 1000000  },
-    { name: "Venom",            cls: "c-green",     cat: "Egg",    base: 10000000 },
-    { name: "Necromancer",      cls: "c-necro",     cat: "Egg",    base: 25000000 },
-    { name: "Medusa",           cls: "c-teal",      cat: "Egg",    base: 12500000 },
-    { name: "Runic Beast",      cls: "c-lime",      cat: "Egg",    base: 77777777 },
-    { name: "Summer Pegasus",   cls: "c-sky",       cat: "Egg",    base: 5000000  },
-    { name: "Ice Cream Sundae", cls: "c-sundae",    cat: "Egg",    base: 15000000 },
-    { name: "Kraken",           cls: "c-kraken",    cat: "Egg",    base: 88888888 },
-    { name: "???",              cls: "c-gray",      cat: "Egg",    base: 20000    },
-    { name: "Ornate Opal",  cls: "c-opal",      cat: "Egg",    base: 2000000  },
-    { name: "Crystal Protector",cls: "c-orange",    cat: "Bounty", base: 5000000  },
-    { name: "Poltergeist",      cls: "c-red",       cat: "Bounty", base: 12500000 },
-    { name: "Wrath",            cls: "c-red",       cat: "Bounty", base: 66666666 },
+    { name: "Cryogen",          cls: "c-cyan",          egg: "Ice Egg",      base: 10000000  },
+    { name: "Sugar Fairy",      cls: "c-pink",          egg: "Candy Egg",    base: 10000000  },
+    { name: "Phoenix",          cls: "c-orange",        egg: "Magma Egg",    base: 10000000  },
+    { name: "Hellking",         cls: "c-red",           egg: "Magma Egg",    base: 50000000  },
+    { name: "Venom",            cls: "c-green",         egg: "Mushroom Egg", base: 10000000  },
+    { name: "Necromancer",      cls: "c-necro",         egg: "Mushroom Egg", base: 25000000  },
+    { name: "Medusa",           cls: "c-teal",          egg: "Runic Egg",    base: 12500000  },
+    { name: "Runic Beast",      cls: "c-lime",          egg: "Runic Egg",    base: 77777777  },
+    { name: "Summer Phoenix",   cls: "c-summerphoenix", egg: "Tide Egg",     base: 10000000  },
+    { name: "Ice Cream Sundae", cls: "c-sundae",        egg: "Tropical Egg", base: 15000000  },
+    { name: "Kraken",           cls: "c-kraken",        egg: "Tropical Egg", base: 88888888  },
+    { name: "Ornate Opal",      cls: "c-opal",          egg: "Diamond Egg",  base: 2000000   },
+    { name: "Royal Ruby",       cls: "c-ruby",          egg: "Diamond Egg",  base: 2000000   },
+    { name: "Moonseeker",       cls: "c-moonseeker",    egg: "Solar Egg",    base: 5000000   },
+    { name: "Sunseeker",        cls: "c-sunseeker",     egg: "Solar Egg",    base: 5000000   },
+    { name: "???",              cls: "c-rainbow",       egg: "Solar Egg",    base: 111111111 },
   ];
+
+  const EGGS = [...new Set(PETS.map(p => p.egg))];
+  let activeEgg = EGGS[0];
 
   function fmtNum(n) {
     if (Number.isInteger(n)) return n.toLocaleString('en-US');
-    // Round to 2 decimal places, strip trailing zeros
     const rounded = Math.round(n * 100) / 100;
     const parts = rounded.toFixed(2).replace(/\.?0+$/, '').split('.');
     parts[0] = Number(parts[0]).toLocaleString('en-US');
@@ -411,7 +532,6 @@
 
   function fmtProb(n) {
     if (n === 0) return '0%';
-    // Find enough decimal places to show at least 2 significant digits, then round there
     let decimals = 2;
     let test = n;
     while (test < 1 && decimals < 20) { decimals += 1; test *= 10; }
@@ -420,10 +540,16 @@
     return rounded.toFixed(decimals).replace(/\.?0+$/, '') + '%';
   }
 
-  function rolls(base, luck, pct) {
-    const p = luck / base;
-    if (p >= 1) return 1;
-    return Math.ceil(Math.log(1 - pct) / Math.log(1 - p));
+  function renderTabs() {
+    const tabsEl = document.getElementById('egg-tabs');
+    tabsEl.innerHTML = '';
+    EGGS.forEach(egg => {
+      const btn = document.createElement('button');
+      btn.textContent = egg;
+      if (egg === activeEgg) btn.classList.add('active');
+      btn.onclick = () => { activeEgg = egg; renderTabs(); recalc(); };
+      tabsEl.appendChild(btn);
+    });
   }
 
   function recalc() {
@@ -431,25 +557,17 @@
     const tbody = document.getElementById('luck-tbody');
     tbody.innerHTML = '';
 
-    PETS.forEach(pet => {
+    PETS.filter(p => p.egg === activeEgg).forEach(pet => {
       const eff  = pet.base / luck;
       const prob = luck / pet.base * 100;
-      const r50  = rolls(pet.base, luck, 0.5);
-      const r90  = rolls(pet.base, luck, 0.9);
-      const catBadge = pet.cat === 'Bounty'
-        ? '<span class="badge badge-bounty">Bounty</span>'
-        : '<span class="badge badge-egg">Egg</span>';
 
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td class="${pet.cls}">${pet.name}</td>
-        <td>${catBadge}</td>
         <td class="val-muted">1 / ${pet.base.toLocaleString('en-US')}</td>
         <td class="val-gold">1 / ${fmtNum(eff)}</td>
         <td class="val-lime">${fmtProb(prob)}</td>
         <td class="val-sky">${fmtNum(eff)}</td>
-        <td class="val-orange">${fmtNum(r50)}</td>
-        <td class="val-red">${fmtNum(r90)}</td>
       `;
       tbody.appendChild(tr);
     });
@@ -463,6 +581,7 @@
     if (id === 'luck') recalc();
   }
 
+  renderTabs();
   recalc();
 </script>
 </body>
